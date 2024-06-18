@@ -1,0 +1,3 @@
+[submodule "mpox_build"]
+	path = mpox_build
+	url = https://github.com/nextstrain/mpox.git
