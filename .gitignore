@@ -1,6 +1,6 @@
 *json
 *json.zip
-*.xml
+#*.xml
 *.log
 *.trees
 *.tree
@@ -8,6 +8,11 @@
 *.state
 *.fasta
 *.Rhistory
+*.tsv
+*.traj
+*.xml
+*state
+*.nexus
 
 
 # Sensitive environment variables
