@@ -15,7 +15,7 @@ for v = 1: length(scheme)
             rate_shifts = [7/366:7/366:(datenum(sample_cutoff(sc))-datenum(end_date))/366 1];
             rate_shifts_immi = [7/366:7/366:(datenum(sample_cutoff(sc))-datenum(end_date))/366 1];
     
-            f = fopen(sprintf('../simulations/eir_%d.tsv', rep));
+            f = fopen(sprintf('../simulation_results/eir_%d.tsv', rep));
             c=1;
             id = cell(0,0);
             date = cell(0,0);
@@ -27,7 +27,7 @@ for v = 1: length(scheme)
                 all_seqs = dat{1};
                 subsampled_seqs = randsample(all_seqs, length(all_seqs)/2);
             end 
-            f = fopen(sprintf('../simulations/eir_%d.tsv', rep));
+            f = fopen(sprintf('../simulation_results/eir_%d.tsv', rep));
             while ~feof(f)
                 line = strsplit(fgets(f), '\t');
                 date_num = datenum(line{2});
@@ -61,9 +61,9 @@ for v = 1: length(scheme)
             fclose(f);
     
     
-            f = fopen('../multitree_coalescent/multicoal_template.xml');
-            g = fopen(sprintf('../simulations/xmls/simmulticoal_%d_%s.xml', rep, scheme{v}), 'w');
-            s =  fopen(sprintf('../simulations/eir_%d.fasta', rep));
+            f = fopen('../../multitree_coalescent/templates/multicoal_template.xml');
+            g = fopen(sprintf('../xmls/simmulticoal_%d_%s.xml', rep, scheme{v}), 'w');
+            s =  fopen(sprintf('../simulation_results/eir_%d.fasta', rep));
             fgets(s);c=1;seq_id=cell(0,0);
             while ~feof(s)
                 line = strsplit(strtrim(fgets(s)));

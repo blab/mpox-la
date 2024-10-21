@@ -38,9 +38,9 @@ for a = 1 : size(y,1)
 end
 
 
-for rep = 0 : 8
+for rep = 0 : 4
     f = fopen('../xml_templates/simulation_template.xml');
-    g = fopen(sprintf('../simulations/eir_%d.xml',rep),'w');
+    g = fopen(sprintf('../simulation_results/eir_%d.xml',rep),'w');
     while ~feof(f)
         line = fgets(f);
         if contains(line, 'insert_transmission')
@@ -79,14 +79,14 @@ for rep = 0 : 8
     end
     fclose('all');
 
-    system(sprintf('/Applications/BEAST\\ 2.7.3/bin/beast -overwrite ../simulations/eir_%d.xml', rep));
+    system(sprintf('/Applications/BEAST\\ 2.7.3/bin/beast -overwrite ../simulation_results/eir_%d.xml', rep));
 
     origin = datenum(start_tree);
 
-    t = fopen(sprintf('../simulations/eir_%d.tree', rep));
+    t = fopen(sprintf('../simulation_results/eir_%d.tree', rep));
 
     tree = fgets(t);fclose(t);
-    g = fopen(sprintf('../simulations/eir_%d.conv.tree', rep),'w');
+    g = fopen(sprintf('../simulation_results/eir_%d.conv.tree', rep),'w');
     sampling_times = zeros(0,0);
 
     % add the reporting delay on them
@@ -105,7 +105,7 @@ for rep = 0 : 8
     tree = regexprep(tree, '((\d*):','(i$1:');
     tree = regexprep(tree, ',(\d*):',',i$1:');
 
-    f = fopen(sprintf('../simulations/eir_%d.nexus', rep));fgets(f);fgets(f);fgets(f);
+    f = fopen(sprintf('../simulation_results/eir_%d.nexus', rep));fgets(f);fgets(f);fgets(f);
     line = fgets(f);
     % get all the sampling times
     st = regexp(line, '(\d*)\[&type="I",reaction="Sampling",time=(\d*)\.(\d*)\]','match');
@@ -114,7 +114,7 @@ for rep = 0 : 8
     cluster_member = getClustersFromTree(tree_str{end});
 
 
-    m = fopen(sprintf('../simulations/eir_%d.tsv', rep),'w');
+    m = fopen(sprintf('../simulation_results/eir_%d.tsv', rep),'w');
     for i = 1 : length(st)
         tmp = strsplit(st{i}, '[');
         tmp2 = strsplit(st{i}, '=');
@@ -127,11 +127,11 @@ for rep = 0 : 8
     fprintf(g, getnewickstr(ptree));
     fclose('all');
 
-    delete(sprintf('../simulations/eir_%d.fasta', rep));
+    delete(sprintf('../simulation_results/eir_%d.fasta', rep));
 
-    command = sprintf('%s -mHKY -t18.5 -a 0.05 %s -l 197000 -s %.12f < ../simulations/eir_%d.conv.tree > %s',...
-    '../../Seq-gen/source/seq-gen',...
-        '-f0.3,0.2,0.2,0.3',clock_rate, rep, sprintf('../simulations/eir_%d.fasta', rep));
+    command = sprintf('%s -mHKY -t18.5 -a 0.05 %s -l 197000 -s %.12f < ../simulation_results/eir_%d.conv.tree > %s',...
+    '../../../Seq-gen/source/seq-gen',...
+        '-f0.3,0.2,0.2,0.3',clock_rate, rep, sprintf('../simulation_results/eir_%d.fasta', rep));
     system(command);
 end
 
