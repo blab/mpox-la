@@ -1,15 +1,15 @@
 clear;
 %start_date = '2020-01-31';
 clade = {'all'};
-fastafiles = dir('data/*.fasta');
+fastafiles = dir('../data/*.fasta');
 for i = 1 : length(fastafiles)
-    s = fastaread(['data/' fastafiles(i).name]);
+    s = fastaread(['../data/' fastafiles(i).name]);
     seq_id=cell(0,0);
     for i = 1 : length(s)
         seq_id{i} = s(1).Header;
     end
     for v = 1: length(clade)
-        f = fopen(['data/' strrep(fastafiles(1).name, 'fasta','tsv')]);
+        f = fopen(['../data/' strrep(fastafiles(1).name, 'fasta','tsv')]);
         dat = textscan(f, '%s\t%s\t%s\t%s\t%s\t%s\t%s\n','HeaderLines',1);fclose(f);
         seq_names = cell(0,0);
         for j = 1 : length(s)
@@ -90,8 +90,8 @@ for i = 1 : length(fastafiles)
 
         local_clusters = unique(dat{2});
 
-        f = fopen('multicoal_template.xml');
-        g = fopen(['multicoal_updated_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
+        f = fopen('../templates/multicoal_template.xml');
+        g = fopen(['../xmls/multicoal_updated_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
         while ~feof(f)
             line = fgets(f);
             if contains(line, 'insert_data')

@@ -1,4 +1,4 @@
-﻿date,Empirical # of diagnosed cases,Model (FoI=1) diagnosed cases,Model (FoI=1) incidence,Model (FoI=1) symp,Model (FoI=1) R_e,Model (FoI=1.25) diagnosed cases,Model (FoI=1.25) incidence,Model (FoI=1.25) symp,Model (FoI=1.25) R_e,Model (FoI=1.5) diagnosed cases,Model (FoI=1.5) incidence,Model (FoI=1.5) symp,Model (FoI=1.5) R_e,Model (FoI=2) diagnosed cases,Model (FoI=2) incidence
+date,Empirical # of diagnosed cases,Model (FoI=1) diagnosed cases,Model (FoI=1) incidence,Model (FoI=1) symp,Model (FoI=1) R_e,Model (FoI=1.25) diagnosed cases,Model (FoI=1.25) incidence,Model (FoI=1.25) symp,Model (FoI=1.25) R_e,Model (FoI=1.5) diagnosed cases,Model (FoI=1.5) incidence,Model (FoI=1.5) symp,Model (FoI=1.5) R_e,Model (FoI=2) diagnosed cases,Model (FoI=2) incidence
 7/3/22 - 7/9/22,64,53,81,181,,53,81,181,,53,81,181,,53,81
 7/10/22 - 7/16/22,125,123,140,279,2.320441989,123,140,279,2.320441989,123,140,279,2.320441989,123,140
 7/17/22 - 7/23/22,185,179,249,392,2.677419355,179,249,392,2.677419355,179,249,392,2.677419355,179,249
@@ -111,7 +111,3 @@
 8/4/24 - 8/10/24,5,0,0,1,0,0,0,1,0,2,4,7,1.714285714,797,713
 8/11/24 - 8/17/24,6,0,0,0,0,1,0,1,0,3,4,9,1.714285714,683,654
 8/18/24 - 8/24/24,10,0,0,1,#DIV/0!,0,0,1,0,3,7,11,2.333333333,648,571
-8/25/24 - 8/31/24,9,,,,,,,,,,,,,,
-9/1/24 - 9/5/24,2,,,,,,,,,,,,,,
-,2437,2301,2194,6634,#DIV/0!,2350,2245,6774,88.86078002,2462,2366,6995,113.333807,42671,46105
-,216,26,31,155,#DIV/0!,75,82,295,62.98452381,187,203,516,87.45755078,40396,43942
