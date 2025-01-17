@@ -1,0 +1,7 @@
+[tool.codespell]
+write = ''
+skip = '*.gff,*.gff3'
+
+[tool.snakefmt]
+include = '\.smk$|^Snakefile'
+exclude = ''

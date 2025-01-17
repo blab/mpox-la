@@ -1,0 +1,74 @@
+from packaging import version
+from augur.__version__ import __version__ as augur_version
+import sys
+
+min_augur_version = "22.2.0"
+if version.parse(augur_version) < version.parse(min_augur_version):
+    print("This pipeline needs a newer version of augur than you currently have...")
+    print(
+        f"Current augur version: {augur_version}. Minimum required: {min_augur_version}"
+    )
+    sys.exit(1)
+
+if not config:
+
+    configfile: "defaults/hmpxv1/config.yaml"
+
+
+build_dir = "results"
+auspice_dir = "auspice"
+
+prefix = config.get("auspice_prefix", None)
+AUSPICE_PREFIX = ("trial_" + prefix + "_") if prefix is not None else ""
+# Defaults to the `build_name` if no `auspice_name` is provided in the config
+AUSPICE_FILENAME = AUSPICE_PREFIX + config.get("auspice_name", config["build_name"])
+
+
+rule all:
+    input:
+        auspice_json=build_dir + f"/{config['build_name']}/tree.json",
+        root_sequence=build_dir + f"/{config['build_name']}/tree_root-sequence.json",
+    output:
+        auspice_json=f"{auspice_dir}/{AUSPICE_FILENAME}.json",
+        root_sequence_json=f"{auspice_dir}/{AUSPICE_FILENAME}_root-sequence.json",
+    shell:
+        """
+        cp {input.auspice_json} {output.auspice_json}
+        cp {input.root_sequence} {output.root_sequence_json}
+        """
+
+
+include: "rules/prepare_sequences.smk"
+include: "rules/construct_phylogeny.smk"
+include: "rules/annotate_phylogeny.smk"
+include: "rules/export.smk"
+
+
+# Include custom rules defined in the config.
+if "custom_rules" in config:
+    for rule_file in config["custom_rules"]:
+
+        include: rule_file
+
+
+rule clean:
+    """
+    Removing directories: {params}
+    """
+    params:
+        build_dir,
+        auspice_dir,
+    shell:
+        "rm -rfv {params}"
+
+
+rule cleanall:
+    """
+    Removing directories: {params}
+    """
+    params:
+        build_dir,
+        auspice_dir,
+        "data",
+    shell:
+        "rm -rfv {params}"

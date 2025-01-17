@@ -1,0 +1,37 @@
+Map from character to field name
+A:	Cook County
+B:	Global
+C:	King County
+D:	Los Angeles County
+E:	New York City
+F:	North America
+G:	?
+
+
+Substitution rate (mu): 351.29947
+
+Equilibrium frequencies (pi_i):
+  A: 0.1831
+  B: 0.0591
+  C: 0.1786
+  D: 0.2747
+  E: 0.14
+  F: 0.1645
+
+Symmetrized rates from j->i (W_ij):
+	A	B	C	D	E	F
+  A	0	0.0635	0.0399	0.6753	0.3989	0.3216
+  B	0.0635	0	1.2568	1.1718	5.1534	7.5271
+  C	0.0399	1.2568	0	0.3497	0.1974	0.8236
+  D	0.6753	1.1718	0.3497	0	1.2697	1.8626
+  E	0.3989	5.1534	0.1974	1.2697	0	5.067
+  F	0.3216	7.5271	0.8236	1.8626	5.067	0
+
+Actual rates from j->i (Q_ij):
+	A	B	C	D	E	F
+  A	0	0.0116	0.0073	0.1236	0.073	0.0589
+  B	0.0038	0	0.0743	0.0692	0.3045	0.4448
+  C	0.0071	0.2245	0	0.0625	0.0353	0.1471
+  D	0.1855	0.3219	0.096	0	0.3488	0.5116
+  E	0.0559	0.7216	0.0276	0.1778	0	0.7095
+  F	0.0529	1.2384	0.1355	0.3065	0.8337	0
