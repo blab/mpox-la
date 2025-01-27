@@ -1,12 +1,12 @@
 % get the clade mapping 
 exlude = {'MK783032', 'MK783030'};
-sample_cutoff = '2024-12-30';
+sample_cutoff = '2025-12-30';
 %% distance based clustering
 date_cutoff = datenum(sample_cutoff);
 
-tree = phytreeread('../../phylogenetic/old_results/11-07-24/tree.nwk');
+tree = phytreeread('../../phylogenetic/old_results/01-22-25/hmpxv1/tree.nwk');
 % get all LA sequences
-f = fopen('../cluster_metadata.tsv');
+f = fopen('../data_for_parsimony/updated_metadata.tsv');
 line = strsplit(fgets(f), '\t');
 div_id = find(ismember(line,'division'));
 date_id = find(ismember(line,'date'));
@@ -25,7 +25,7 @@ date_val = zeros(0,0);
 strain = cell(0,0);
 while ~feof(f)
     line = strsplit(fgets(f), '\t','CollapseDelimiters', false);
-    id{c,1} = line{2};
+    id{c,1} = line{1};
     strain{c,1} = line{strain_id};
     date{c,1} = line{date_id};
    % lab{c,1} = line{originating_id};
@@ -106,7 +106,7 @@ end
 
 
 
-f = fopen('node_locations.tsv', 'w');
+f = fopen('../clustering_results/node_locations.tsv', 'w');
 for i = 1 : length(nodenames)
     if contains(nodenames{i},'NODE')
         if strcmp(location{i},'Los Angeles County')
@@ -242,7 +242,7 @@ cl_ind = find(~ismember(kc_leafs, 'NA'));
 kc_clusters = kc_leafs(cl_ind);
 
 
-f = fopen('la_county_clusters.tsv', 'w');
+f = fopen('../clustering_results/la_county_clusters.tsv', 'w');
 fprintf(f,'strain\tcluster\n');
 for a = 1 : length(kc_clusters)
     seqs = strsplit(kc_clusters{a}, ',');
