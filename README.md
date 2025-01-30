@@ -24,5 +24,7 @@ This repository contains the analytic code needed to reproduce the phylodynamic 
 
 5. To run simulations of mpox dynamics with superspreading which are part of our validation analysis for our multitree approach, you can find the necessary code in [`simulations`](simulations/)
 
+6. of note, while the code for the microsimulation model used in our study is found on a seperate repo, the results of the microsim model used in our manuscript can be found under [`data`](data/) and used to recreate the main figures.
+
 Of note, most of the xml and result files have been compressed. To decompress use the following format in the command line:
 `xz --decompress --keep {file.name}`
