@@ -12,4 +12,17 @@ In 2022, mpox clade IIb disseminated around the world, causing outbreaks in more
 
 This repository contains the analytic code needed to reproduce the phylodynamic results from the above paper. 
 
-## Primary analysis outline... WIP
+## Primary analysis outline
+
+1. To start, begin with the folder [`mpox_build`](mpox_build/) to run the maximum likelihood analysis and create the temporally resolved phylogeny of clade II mpox. The ML phylogeny used in the manuscript can be found at https://nextstrain.org/groups/blab/mpox/allcladeIIseqs?c=focus_areas
+
+2. Identify the local outbreak clusters for Los Angeles County using maximum parsimony found in [`cluster_assignment`](mpox_build/cluster_assignment/)
+
+3. Once the clusters have been identified and the cluster and sequence metadata have been combined, switch to the [`multitree_coalescent`](multitree_coalescent/) folder which contains the scripts to create the BEAST2 XMLs that can be run using the provided [`jar file`](multitree_coalescent/mpox_la.jar). All the xmls used in the above analysis can be found in [`xmls`](multitree_coalescent/xmls/)
+
+4. Analyze the results to create the manuscript figures using the scripts for each corresponding figure found in [`scripts`](scripts/)
+
+5. To run simulations of mpox dynamics with superspreading which are part of our validation analysis for our multitree approach, you can find the necessary code in [`simulations`](simulations/)
+
+Of note, most of the xml and result files have been compressed. To decompress use the following format in the command line:
+`xz --decompress --keep {file.name}`

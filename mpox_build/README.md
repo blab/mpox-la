@@ -1,29 +1,16 @@
 # Nextstrain repository for mpox virus
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/nextstrain/mpox/master.svg)](https://results.pre-commit.ci/latest/github/nextstrain/mpox/master)
+This repo is forked and customized from the original Nextstrain mpox build found here: [nextstrain.org/mpox](https://nextstrain.org/mpox).
 
-This repository contains three workflows for the analysis of mpox virus (MPXV) data:
+## for this specific project:
 
-- [`ingest/`](./ingest) - Download data from GenBank, clean and curate it and upload it to S3
-- [`phylogenetic/`](./phylogenetic) - Filter sequences, align, construct phylogeny and export for visualization
-- [`nextclade/`](./nextclade) - Make Nextclade datasets for nextstrain/nextclade_data
+This repo is customized for understanding mpox diversity and spread in LA County. 
 
-Each folder contains a README.md with more information. The results of running both workflows are publicly visible at [nextstrain.org/mpox](https://nextstrain.org/mpox).
+To create the maximum likelihood phylogeny used in the manuscript, you can run: 
 
-## Installation
-
-Follow the [standard installation instructions](https://docs.nextstrain.org/en/latest/install.html) for Nextstrain's suite of software tools.
-
-## Quickstart
-
-Run the default phylogenetic workflow via:
 ```
 cd phylogenetic/
-nextstrain build .
+nextstrain build . --configfile my_configs/all_cladeII_config.yaml -p
 nextstrain view .
 ```
-
-## Documentation
-
-- [Running a pathogen workflow](https://docs.nextstrain.org/en/latest/tutorials/running-a-workflow.html)
-- [Contributor documentation](./CONTRIBUTING.md)
+This will create the nextstrain json, newick file, and alignment needed to continue the workflow. 
