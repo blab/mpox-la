@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.6">
+
+insert_data
+
+
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+<siteModel id="SiteModel" spec="SiteModel" gammaCategoryCount="4" shape="@gamma">
+    <parameter id="mutationRate.s:sequences_meta_1" spec="parameter.RealParameter" estimate="false" name="mutationRate">1.0</parameter>
+    <parameter id="proportionInvariant.s:sequences_meta_1" spec="parameter.RealParameter" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+    <substModel id="hky.s:sequences_meta_1" spec="HKY" kappa="@kappa">
+        <frequencies id="estimatedFreqs.s:sequences_meta_1" spec="Frequencies" frequencies="@freqs"/>
+    </substModel>
+</siteModel>
+
+<branchRateModel id="ClockModel" spec="beast.evolution.branchratemodel.StrictClockModel" clock.rate="@clock"/>
+
+<run id="mcmc" spec="beast.coupledMCMC.CoupledMCMC" chainLength="250000000" chains="4" resampleEvery="1000">
+    <state id="state" spec="State" storeEvery="5000">
+        insert_tree
+        <parameter id="clock" spec="parameter.RealParameter" name="stateNode">0.00006</parameter>
+        <parameter id="kappa" spec="parameter.RealParameter" lower="0.0" name="stateNode">18.5</parameter>
+        <parameter id="gamma" spec="parameter.RealParameter" name="stateNode">1</parameter>
+        <parameter id="freqs" spec="parameter.RealParameter" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+
+        <parameter id="Ne" name="stateNode" dimension="1">0</parameter>
+        <parameter id="immigrationRate" name="stateNode" dimension="0">0.0</parameter>
+        <parameter id="sigma.Ne" name="stateNode" dimension="1">2</parameter>
+        <parameter id="sigma.immi" name="stateNode" dimension="1">2</parameter>
+        insert_rate_shifts
+    </state>
+
+    insert_init_tree
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+
+                    <prior id="FrequenciesPrior.s:S1" name="distribution" x="@freqs">
+                        <Uniform id="Uniform.13" name="distr"/>
+                    </prior>
+                    <prior id="GammaShapePrior.s:S1" name="distribution" x="@gamma">
+                        <Exponential id="Exponential.0" name="distr">
+                            <parameter id="RealParameter.0" spec="parameter.RealParameter" estimate="false" name="mean">1.0</parameter>
+                        </Exponential>
+                    </prior>
+                    <prior id="KappaPrior.s:S1" name="distribution" x="@kappa">
+                        <LogNormal id="LogNormalDistributionModel.0" name="distr">
+                            <parameter id="RealParameter.1" spec="parameter.RealParameter" estimate="false" name="M">1.0</parameter>
+                            <parameter id="RealParameter.2" spec="parameter.RealParameter" estimate="false" name="S">1.25</parameter>
+                        </LogNormal>
+                    </prior>
+            insert_priors
+                </multiTreeIntervals>
+            </distribution>    
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+          insert_likelihood
+        </distribution>
+    </distribution>
+
+    insert_operators
+
+        <operator id="AMVGoperator1" spec="AdaptableVarianceMultivariateNormalOperator" every="100" beta="0.5" scaleFactor="0.01" weight="20.0" initial="10">
+                <transformations spec="beast.util.Transform$NoTransform" f="@Ne"/>
+                <transformations spec="beast.util.Transform$NoTransform" f="@immigrationRate"/>
+                <transformations spec="beast.util.Transform$LogTransform" f="@sigma.immi"/>
+                <transformations spec="beast.util.Transform$LogTransform" f="@sigma.Ne"/>
+         </operator>
+        <operator id="dsadasdasdsa" spec="ScaleOperator" scaleFactor="0.5" parameter="@sigma.immi" weight="1.0"/>
+        <operator id="daddasdsa" spec="ScaleOperator" scaleFactor="0.5" parameter="@sigma.Ne" weight="1.0"/>
+
+        <operator id="RMW" spec="RealRandomWalkOperator" windowSize="0.5" parameter="@Ne" weight="1.0"/>
+        <operator id="RMW2" spec="RealRandomWalkOperator" windowSize="0.5" parameter="@immigrationRate" weight="1.0"/>
+
+        <operator id="FrequenciesExchanger.s:S1" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqs"/>
+    	</operator>
+
+		<operator id="KappaScaler3" spec="ScaleOperator" parameter="@kappa" scaleFactor="0.5" weight="0.1"/>
+
+
+    <logger id="tracelog" spec="Logger" fileName="$(filebase).log" logEvery="50000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log idref="kappa"/>
+        insert_logs
+    </logger>
+
+    <logger id="screenlog" spec="Logger" logEvery="50000">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    insert_logtree
+
+</run>
+
+</beast>
