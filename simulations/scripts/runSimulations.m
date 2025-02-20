@@ -3,7 +3,7 @@ sample_cutoff = {'2022-12-31'};
 
 start_tree = '2022-05-01';
 
-clock_rate = 0.000006;
+clock_rate = 0.00006;
 
 k = 0.30;
 
