@@ -27,7 +27,7 @@ for i = 1 : length(R0)
 end
 x = [1:100];
 
-unin_rate =81.1;
+unin_rate =33.6;
 
 
 y = zeros(length(x), length(R0));

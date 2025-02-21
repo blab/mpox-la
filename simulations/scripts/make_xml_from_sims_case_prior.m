@@ -7,7 +7,7 @@ scheme = {'half', 'all'};
 % define the reporting delay in days
 reporting_delay = 0;
 for v = 1: length(scheme)
-    for rep = 2:8
+    for rep = 1:4
         for sc = 1 : length(sample_cutoff)
             rate_shifts = [7/366:7/366:(datenum(sample_cutoff(sc))-datenum(end_date))/366 1];
             rate_shifts_immi = [7/366:7/366:(datenum(sample_cutoff(sc))-datenum(end_date))/366 1];
