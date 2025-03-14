@@ -4,13 +4,13 @@ subset = 0.01:0.01:0.99;
 
 % get the clade mapping 
 exlude = {'MK783032', 'MK783030'};
-sample_cutoff = '2024-09-30';
+sample_cutoff = '2025-09-30';
 %% distance based clustering
 date_cutoff = datenum(sample_cutoff);
 
-full_tree = phytreeread('../phylogenetic/old_results/08-30-24/hmpxv1/tree.nwk');
+full_tree = phytreeread('../../phylogenetic/old_results/02-27-25/hmpxv1/tree.nwk');
 % get all LA sequences
-f = fopen('cluster_metadata.tsv');
+f = fopen('../data_for_parsimony//updated_metadata.tsv');
 
 line = strsplit(fgets(f), '\t');
 div_id = find(ismember(line,'division'));
@@ -29,7 +29,7 @@ date = cell(0,0);
 date_val = zeros(0,0);
 while ~feof(f)
     line = strsplit(fgets(f), '\t','CollapseDelimiters', false);
-    id{c,1} = line{2};
+    id{c,1} = line{1};
     strain{c,1} = line{strain_id};
     date{c,1} = line{date_id};
 
@@ -62,7 +62,7 @@ for rep = 1 : 5 : length(subset)
     end
     
     keep_nodes = true(length(leafs), 1);
-    keep_nodes(randsample(find(is_wa_leaf==1), round(sum(is_wa_leaf==1)*(1-subset(rep))))) = false;
+    keep_nodes(randsample(find(is_wa_leaf==1), round(sum(is_wa_leaf==1)*(1-subset(rep))))) = false; %change to is_wa_leaf==1 if you want to resample the LA seqs
 
     tree = prune(full_tree, ~keep_nodes);
     
@@ -239,7 +239,7 @@ for rep = 1 : 5 : length(subset)
     wa_clusters = wa_leafs(cl_ind);
 
 
-    f = fopen(['results/cluster_assignment_within_LA_subsampling_' num2str(rep) '.tsv'], 'w');
+    f = fopen(['results/cluster_assignment_inside_LA_subsampling_' num2str(rep) '.tsv'], 'w');
     fprintf(f,'strain\tcluster\n')
     for a = 1 : length(wa_clusters)
         seqs = strsplit(wa_clusters{a}, ',');

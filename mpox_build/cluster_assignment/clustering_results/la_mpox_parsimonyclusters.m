@@ -4,7 +4,7 @@ sample_cutoff = '2025-12-30';
 %% distance based clustering
 date_cutoff = datenum(sample_cutoff);
 
-tree = phytreeread('../../phylogenetic/old_results/01-22-25/hmpxv1/tree.nwk');
+tree = phytreeread('../../phylogenetic/old_results/02-27-25/hmpxv1/tree.nwk');
 % get all LA sequences
 f = fopen('../data_for_parsimony/updated_metadata.tsv');
 line = strsplit(fgets(f), '\t');

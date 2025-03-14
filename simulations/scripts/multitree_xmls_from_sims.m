@@ -62,7 +62,7 @@ for v = 1: length(scheme)
     
     
             f = fopen('../../multitree_coalescent/templates/multicoal_template.xml');
-            g = fopen(sprintf('../xmls/simmulticoal_%d_%s.xml', rep, scheme{v}), 'w');
+            g = fopen(sprintf('../xmls/TEST_simmulticoal_%d_%s.xml', rep, scheme{v}), 'w');
             s =  fopen(sprintf('../simulation_results/eir_%d.fasta', rep));
             fgets(s);c=1;seq_id=cell(0,0);
             while ~feof(s)
