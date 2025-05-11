@@ -1,4 +1,4 @@
-clear;
+oclear;
 %start_date = '2020-01-31';
 clade = {'all'};
 fastafiles = dir('../data/*.fasta');
@@ -91,7 +91,7 @@ for i = 1 : length(fastafiles)
         local_clusters = unique(dat{2});
 
         f = fopen('../templates/multicoal_template_cases.xml');
-        g = fopen(['../xmls/multicoal_updated_case_prior_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
+        g = fopen(['../xmls/FOO_multicoal_updated_case_prior_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
         while ~feof(f)
             line = fgets(f);
             if contains(line, 'insert_data')
@@ -221,7 +221,7 @@ for i = 1 : length(fastafiles)
 
                  for lc = 1 : length(local_clusters)
                     fprintf(g,'\t\t\t<log id="TreeStatsLogger:%d" spec="beast.evolution.tree.TreeStatLogger" tree="@Tree.t:S%s"/>\n',lc,local_clusters{lc});
-              %      fprintf(g,'\t\t\t<log id="MultiTreeStatsLogger1:%d" spec="nab.util.MultiTreeStatLogger" heightOnly="true" tree="@Tree.t:S%s"  rootLength="@rootLength:S%s" />\n',lc,local_clusters{lc},local_clusters{lc});
+              %      fprintf(g,'\t\t\t<log id=" :%d" spec="nab.util.MultiTreeStatLogger" heightOnly="true" tree="@Tree.t:S%s"  rootLength="@rootLength:S%s" />\n',lc,local_clusters{lc},local_clusters{lc});
                %     fprintf(g,'\t\t\t<log id="MultiTreeStatsLogger2:%d" spec="nab.util.MultiTreeStatLogger" originOnly="true" tree="@Tree.t:S%s"  rootLength="@rootLength:S%s" />\n',lc,local_clusters{lc},local_clusters{lc});
                  end
              elseif contains(line, 'insert_logtree')
