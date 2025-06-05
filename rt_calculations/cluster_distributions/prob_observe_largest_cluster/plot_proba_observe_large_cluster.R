@@ -63,13 +63,13 @@ plot_proba_large_clust <- function(df_proba_obs_large_clust){
                                  title.hjust = 0.5)) +
     annotate(geom = 'text', colour = 'white', angle = 30, 
              size = 3,
-             x = 0.36, y = log(0.012), label = expression(10^{-1})) +
+             x = 0.18, y = log(0.012), label = expression(10^{-1})) +
     annotate(geom = 'text', colour = 'white', angle = 30, 
              size = 3,
-             x = 0.27, y = log(0.01205), label = expression(10^{-2})) +
+             x = 0.13, y = log(0.02405), label = expression(10^{-2})) +
     annotate(geom = 'text', colour = 'white', angle = 30, 
              size = 3,
-             x = 0.19, y = log(0.014), label = expression(10^{-4}))
+             x = 0.13, y = log(0.0714), label = expression(10^{-4}))
   
   return(plt_proba)
 }

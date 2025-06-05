@@ -5,7 +5,7 @@ library(igraph)
 
 ## Distribution of cluster of identical sequences
 #cluster_alloc <- readRDS('../data/cluster_alloc.rds')
-cluster_alloc <-read_csv("../../rt_calculations/cluster_distributions/cluster_distribution_combined_filtered.csv")
+cluster_alloc <-read_csv("../../cluster_distributions/cluster_r_analysis/cluster_distribution_combined_filtered.csv")
 
 size_largest_polytomy <- cluster_alloc$cluster_size %>% max()
 n_clust_identical_sequences <- sum(cluster_alloc$count)
