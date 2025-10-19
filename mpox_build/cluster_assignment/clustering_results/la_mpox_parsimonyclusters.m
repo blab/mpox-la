@@ -1,12 +1,12 @@
 % get the clade mapping 
 exlude = {'MK783032', 'MK783030'};
-sample_cutoff = '2025-12-30';
+sample_cutoff = '2025-02-28';
 %% distance based clustering
 date_cutoff = datenum(sample_cutoff);
 
-tree = phytreeread('../../phylogenetic/old_results/02-27-25/hmpxv1/tree.nwk');
+tree = phytreeread('../../phylogenetic/old_results/10-03-25/hmpxv1/tree.nwk');
 % get all LA sequences
-f = fopen('../data_for_parsimony/updated_metadata.tsv');
+f = fopen('../data_for_parsimony/10_02_25/updated_metadata.tsv');
 line = strsplit(fgets(f), '\t');
 div_id = find(ismember(line,'division'));
 date_id = find(ismember(line,'date'));

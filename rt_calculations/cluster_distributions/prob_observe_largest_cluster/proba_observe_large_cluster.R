@@ -64,8 +64,10 @@ get_prop_01_offsprings <- function(R0, k){
 max_cluster_size_sim <- 2e2
 n_mpox_cases <- 316
 n_seq / n_mpox_cases
-p_detect <- 0.055
-p_detect_2 <- 0.5
+p_detect <- 0.015
+p_detect_2 <- 0.055
+p_detect_3 <- 0.25
+p_detect_4 <- 0.5
 
 vec_cluster_size <- 1:size_largest_polytomy
 
@@ -118,12 +120,39 @@ df_proba_obs_large_clust$proba_at_least_size_largest_polytomy_2 <-
     proba_cluster_greater_than_cluster <- 1.0 - sum(curr_vec_prob[1:(size_largest_polytomy - 1)])
   })
 
+df_proba_obs_large_clust$proba_at_least_size_largest_polytomy_3 <-
+  Reduce('c',foreach(i_row = 1:nrow(df_proba_obs_large_clust), .packages = c('dplyr')) %dopar% {
+    
+    curr_R <- df_proba_obs_large_clust[i_row, 'R']
+    curr_k <- df_proba_obs_large_clust[i_row, 'k']
+    
+    ## Probability to observe a cluster of vec_cluster_size
+    curr_vec_prob <- get_vec_proba_obs_cluster_size(vec_cluster_size, curr_R, curr_k, p_trans_before_mut, p_detect_3, max_cluster_size_sim)
+    
+    proba_cluster_greater_than_cluster <- 1.0 - sum(curr_vec_prob[1:(size_largest_polytomy - 1)])
+  })
+
+df_proba_obs_large_clust$proba_at_least_size_largest_polytomy_4 <-
+  Reduce('c',foreach(i_row = 1:nrow(df_proba_obs_large_clust), .packages = c('dplyr')) %dopar% {
+    
+    curr_R <- df_proba_obs_large_clust[i_row, 'R']
+    curr_k <- df_proba_obs_large_clust[i_row, 'k']
+    
+    ## Probability to observe a cluster of vec_cluster_size
+    curr_vec_prob <- get_vec_proba_obs_cluster_size(vec_cluster_size, curr_R, curr_k, p_trans_before_mut, p_detect_4, max_cluster_size_sim)
+    
+    proba_cluster_greater_than_cluster <- 1.0 - sum(curr_vec_prob[1:(size_largest_polytomy - 1)])
+  })
+
 stopCluster(cl)
 t1 <- Sys.time()
 print(t1 - t0)
 
 df_proba_obs_large_clust <- df_proba_obs_large_clust %>%
   mutate(proba_obs_cluster_size = 1.0 - exp(n_clust_identical_sequences * log(1.0 - proba_at_least_size_largest_polytomy)),
-         proba_obs_cluster_size_2 = 1.0 - exp(n_clust_identical_sequences * log(1.0 - proba_at_least_size_largest_polytomy_2)))
+         proba_obs_cluster_size_2 = 1.0 - exp(n_clust_identical_sequences * log(1.0 - proba_at_least_size_largest_polytomy_2)),
+         proba_obs_cluster_size_3 = 1.0 - exp(n_clust_identical_sequences * log(1.0 - proba_at_least_size_largest_polytomy_3)),
+         proba_obs_cluster_size_4 = 1.0 - exp(n_clust_identical_sequences * log(1.0 - proba_at_least_size_largest_polytomy_4)))
 
-saveRDS(df_proba_obs_large_clust, './results/proba_large_polytomy/df_proba_obs_large_clust_LA.rds')
+saveRDS(df_proba_obs_large_clust, './results/proba_large_polytomy/df_proba_obs_large_clust_LA_expanded.rds')
+

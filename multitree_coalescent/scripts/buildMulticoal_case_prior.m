@@ -1,4 +1,4 @@
-oclear;
+clear;
 %start_date = '2020-01-31';
 clade = {'all'};
 fastafiles = dir('../data/*.fasta');
@@ -91,7 +91,7 @@ for i = 1 : length(fastafiles)
         local_clusters = unique(dat{2});
 
         f = fopen('../templates/multicoal_template_cases.xml');
-        g = fopen(['../xmls/FOO_multicoal_updated_case_prior_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
+        g = fopen(['../xmls/multicoal_updated_case_prior_10_03_25_' strrep(fastafiles(1).name, 'fasta','xml')],'w');
         while ~feof(f)
             line = fgets(f);
             if contains(line, 'insert_data')

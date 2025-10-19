@@ -23,13 +23,13 @@ plot_proba_large_clust <- function(df_proba_obs_large_clust){
   
   df_proba_obs_large_clust %>% 
     mutate(k = exp(log_k)) %>% 
-    filter(k > 0.09, k < 0.12, proba_obs_cluster_size_2 > 0.05) %>% 
+    filter(k > 0.09, k < 0.12, proba_obs_cluster_size > 0.05) %>% 
     group_by(k) %>% 
-    filter(proba_obs_cluster_size_2 == min(proba_obs_cluster_size_2)) %>% 
+    filter(proba_obs_cluster_size == min(proba_obs_cluster_size)) %>% 
     print()
   
   plt_proba <- df_proba_obs_large_clust %>% 
-    mutate(crop_prob = ifelse(proba_obs_cluster_size_2 < 1e-8, 1e-8, proba_obs_cluster_size_2),
+    mutate(crop_prob = ifelse(proba_obs_cluster_size < 1e-8, 1e-8, proba_obs_cluster_size),
            log10_prob = log10(crop_prob)) %>% 
     ggplot(aes(y = log_k, x = R)) +
     geom_raster(aes(fill = log10_prob)) +
@@ -54,11 +54,6 @@ plot_proba_large_clust <- function(df_proba_obs_large_clust){
     theme(axis.line = element_blank(),
           legend.position = 'top',
           legend.key.width = unit(1.5, "cm")) +
-    geom_point(aes(x = R_mle, y = log(k_mle))) +
-    geom_segment(aes(x = R_lower, xend = R_upper,
-                     y = log(k_mle), yend = log(k_mle))) +
-    geom_segment(aes(x = R_mle, xend = R_mle,
-                     y = log(k_lower), yend = log(k_upper))) +
     guides(fill = guide_colorbar(title.position = 'top',
                                  title.hjust = 0.5)) +
     annotate(geom = 'text', colour = 'white', angle = 30, 
